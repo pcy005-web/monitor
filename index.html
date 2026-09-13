@@ -181,7 +181,7 @@
                         <tr>
                             <td><b>방산 / 우주항공</b></td>
                             <td>Lockheed Martin</td>
-                            <td>한화에어로ส페이스, 현대로템</td>
+                            <td>한화에어로스페이스, 현대로템</td>
                             <td><span class="badge badge-gold">사모펀드 지속 유입</span></td>
                         </tr>
                     </tbody>
@@ -317,7 +317,7 @@
     <script>
         const newsFeedData = [
             { cat: "지수/야선", title: "1. 코스피 야간선물(CME) 1,098.85(+0.97%) 상승 마감", desc: "미 증시 강세 훈풍을 이어받아 야간선물이 상승 마감하며 국내증시 시초가 훈풍 시사.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
-            { cat: "전력인프라", title: "2. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 매물(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
+            { cat: "전력인프라", title: "2. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 물량(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
             { cat: "반도체", title: "3. SOX 11,824(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 월요일 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "반도체경쟁", title: "4. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "방산", title: "5. K-방산, 유럽·중동·미국으로 수출 파이프라인 확장 지속", desc: "미국주 커플링과 별개로 방산 업종 자체의 중장기 모멘텀 강력 유지.", stocks: ["한화에어로스페이스", "LIG넥스원"] },
@@ -360,12 +360,24 @@
         }
 
         function shareKakao() {
-            const shareText = `[AlphaFlow 장전 5분 마켓 브리핑]\n\n⏱️ 핵심 요약:\n1. 코스피 야선: 1,098.85 (+0.97% 상승 마감)\n2. HD현대일렉트릭: 외인 +727억 수급 손바뀜 1순위\n3. SK하이닉스: SOX 상승에도 외인/기관 동반 대량 매도로 시초가 추격 주의`;
-            
-            // 호환성을 높인 복사 로직 (보안 제약 환경 대응)
+            const shareText = 
+`[⚡ AlphaFlow 장전 5분 마켓 & 수급 레이더 브리핑]
+
+📌 1. 장전 5분 마켓 핵심 요약
+- 코스피 야간선물(CME): 1,098.85 (+0.97% 상승 마감) ➔ 국장 시초가 훈풍 시사
+- 전력망·방산 등 주도 테마 중심의 중기 사이클 지속 속, 반도체 갭상승 추격 주의
+
+📊 2. 미·한 테마 연동성 및 리스크 구분
+- 전력망/변압기(GE Vernova 연동): HD현대일렉트릭 등 외인 강력 유입 테마주 주목
+- AI 반도체(Micron/NVIDIA 연동): SOX(+1.81%) 강세에도 국장 메이저 수급 이탈 여부 교차 검증 필요
+
+🟢🔴 3. 스마트머니 수급 레이더 분석
+- [외인 집중 매수] HD현대일렉트릭: 기관 물량(-398억) 소화하며 외국인 +727억 순매수 ➔ 메인 주도주 손바뀜
+- [메이저 차익 매도] SK하이닉스: 외국인(-1조 771억)·기관(-4,956억) 동반 이탈 ➔ 지수 호조와 별개로 시초가 추격매수 경계`;
+
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    alert("장전 브리핑 및 수급 레이더 요약문이 복사되었습니다!");
+                    alert("미·한 테마 연동성 및 수급 레이더가 포함된 요약 브리핑이 복사되었습니다!");
                 }).catch(() => {
                     fallbackCopyText(shareText);
                 });
@@ -377,14 +389,14 @@
         function fallbackCopyText(text) {
             const textarea = document.createElement("textarea");
             textarea.value = text;
-            textarea.style.position = "fixed";  // 화면 밖으로 밀어내기
+            textarea.style.position = "fixed";
             document.body.appendChild(textarea);
             textarea.focus();
             textarea.select();
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    alert("장전 브리핑 및 수급 레이더 요약문이 복사되었습니다!");
+                    alert("미·한 테마 연동성 및 수급 레이더가 포함된 요약 브리핑이 복사되었습니다!");
                 } else {
                     alert("복사에 실패했습니다. 텍스트를 직접 복사해주세요.");
                 }
