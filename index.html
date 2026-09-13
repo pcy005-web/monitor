@@ -93,7 +93,7 @@
         </div>
     </header>
 
-    <!-- SECTION 1: 실제 증시 지표 팩트체크 (정확한 WTI 종가 $100.05 반영) -->
+    <!-- SECTION 1: 실제 증시 지표 팩트체크 (코스피 야간선물 추가 반영) -->
     <section class="section-container">
         <div class="section-header">1. 실제 증시 지표 팩트체크</div>
         <div class="grid-3" style="margin-bottom:8px;">
@@ -136,8 +136,8 @@
                 <div class="card-val up">1,341.59원 <br><span style="font-size:0.75rem" class="down">전일대비 안정세</span></div>
             </div>
             <div class="card">
-                <div class="card-title">달러 인덱스</div>
-                <div class="card-val" style="color:var(--text-main);">약보세 <br><span style="font-size:0.75rem; color:var(--text-sub);">주요국 통화 혼조</span></div>
+                <div class="card-title">코스피 야간선물 (CME)</div>
+                <div class="card-val up">1,098.85 <br><span style="font-size:0.75rem" class="up">+0.97% (야간 상승 마감)</span></div>
             </div>
         </div>
     </section>
@@ -201,8 +201,8 @@
                 📌 개장 전 3가지 핵심 체크 포인트
             </div>
             <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">
-                <b>1. 매크로 안정화:</b> WTI 유가가 $100.05(-2.37%)로 숨 고르기에 들어가며 인플레이션 압박 완화.<br>
-                <b>2. 반도체 디커플링:</b> SOX 지수 +1.81% 상승(11,824.00)에도 SK하이닉스 기관(-4,956억)·외인(-1조 771억) 대량 순매도로 시초가 갭상승 추격 주의.<br>
+                <b>1. 야간선물 반등 연동:</b> 코스피 야간선물이 +0.97%(1,098.85 pt) 상승 마감하며 미 증시 훈풍 일부 선반영.<br>
+                <b>2. 반도체 디커플링 경계:</b> SOX 지수 +1.81% 상승에도 SK하이닉스 기관(-4,956억)·외인(-1조 771억) 대량 순매도로 시초가 갭상승 추격 주의.<br>
                 <b>3. 주도 테마 손바뀜:</b> HD현대일렉트릭 외국인 +727억 유입 등 AI 전력망·방산 섹터 중심의 중기 사이클 지속.
             </div>
         </div>
@@ -271,7 +271,7 @@
             <div class="stock-row">
                 <div class="stock-info">
                     <div class="stock-name">4순위: 두산에너빌리티 (028050)</div>
-                    <div class="stock-sub">NuScale 급락과 국내 원전 산업 구조 분리 ➔ 개별 기관/외인 수급 유입 시만 접근</div>
+                    <div class="stock-sub">NuScale 급락과 국내 원전 산업 구조 분리 ➔ 개별 기관/외인 유입 시만 접근</div>
                 </div>
                 <span class="badge badge-gold">수급 확인</span>
             </div>
@@ -316,14 +316,14 @@
 
     <script>
         const newsFeedData = [
-            { cat: "매크로/유가", title: "1. WTI 원유 $100.05(-2.37%) 마감... 인플루엔자 우려 완화", desc: "고공행진하던 국제유가가 숨 고르기에 들어가며 글로벌 증시 하방 압력 완화 요인으로 작용.", stocks: ["S-Oil", "SK이노베이션"] },
+            { cat: "지수/야선", title: "1. 코스피 야간선물(CME) 1,098.85(+0.97%) 상승 마감", desc: "미 증시 강세 훈풍을 이어받아 야간선물이 상승 마감하며 국내증시 시초가 훈풍 시사.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
             { cat: "전력인프라", title: "2. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 매물(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
             { cat: "반도체", title: "3. SOX 11,824(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 월요일 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "반도체경쟁", title: "4. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "방산", title: "5. K-방산, 유럽·중동·미국으로 수출 파이프라인 확장 지속", desc: "미국주 커플링과 별개로 방산 업종 자체의 중장기 모멘텀 강력 유지.", stocks: ["한화에어로스페이스", "LIG넥스원"] },
             { cat: "원자력", title: "6. 美 NuScale -15.67% 급락... 국내 원전주와 직접 커플링 지양", desc: "미국 SMR과 국내 원전 산업 구조가 다르므로 무조건 동반 하락 단정 지양. 개별 수급 확인 필요.", stocks: ["두산에너빌리티", "우진엔텍"] },
             { cat: "조선", title: "7. 한화오션, 러시아 Arctic LNG 2 관련 10.2억 달러 손배 청구 피소", desc: "조선 업황 자체는 양호하나 종목별 개별 악재 노출에 따른 차별화 필수.", stocks: ["한화오션", "HD한국조선해양"] },
-            { cat: "원자재/금", title: "8. 금 현물 $4,344~$4,350선 고점 유지", desc: "고려아연 등 원자재 수혜 가능성 존재하나 금 가격 자체의 변동성 고려 필수.", stocks: ["고려아연", "엘컴텍"] },
+            { cat: "원자재/금", title: "8. 금 현물 $4,344~$4,350선 고점 유지 및 WTI $100.05 안정세", desc: "원자재 시장 혼조세 속 개별 수혜주 중심의 선별적 대응 유효.", stocks: ["고려아연", "S-Oil"] },
             { cat: "2차전지", title: "9. 리튬 가격 단기 하향 안정세... 실적 반등 시점 타진", desc: "재고 평가손실 축소 여부 지속 관찰 필요.", stocks: ["POSCO홀딩스", "에코프로비엠"] },
             { cat: "자동차", title: "10. 북미 하이브리드 차종 점유율 지속 확대", desc: "실적 안정성 기반 자동차 완성차 및 전장 부품주 관찰.", stocks: ["현대차", "기아"] }
         ];
@@ -356,11 +356,11 @@
             const prompt = document.getElementById('ai-prompt').value || "장전 5분 체크 리스트";
             const resultBox = document.getElementById('ai-result');
             resultBox.style.display = 'block';
-            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>매크로 안정:</b> WTI 원유 $100.05 마감으로 인플레 우려 완화.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 1.5조원 이상 동반 매도 출회.`;
+            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>야간선물 지표:</b> 코스피 야선 1,098.85(+0.97%) 마감으로 국내장 훈풍 시사.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 1.5조원 이상 동반 매도 출회.`;
         }
 
         function shareKakao() {
-            const shareText = `[AlphaFlow 장전 5분 마켓 브리핑]\n\n⏱️ 핵심 요약:\n1. WTI 원유: $100.05 마감 (-2.37% 안정세)\n2. HD현대일렉트릭: 외인 +727억 수급 손바뀜 1순위\n3. SK하이닉스: SOX 상승에도 외인/기관 동반 대량 매도로 시초가 추격 주의`;
+            const shareText = `[AlphaFlow 장전 5분 마켓 브리핑]\n\n⏱️ 핵심 요약:\n1. 코스피 야선: 1,098.85 (+0.97% 상승 마감)\n2. HD현대일렉트릭: 외인 +727억 수급 손바뀜 1순위\n3. SK하이닉스: SOX 상승에도 외인/기관 동반 대량 매도로 시초가 추격 주의`;
             navigator.clipboard.writeText(shareText);
             alert("장전 브리핑 및 수급 레이더 요약문이 복사되었습니다!");
         }
