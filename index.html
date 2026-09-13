@@ -1,400 +1,415 @@
-<!DOCTYPE html>  
-<html lang="ko">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Terminal - 장전 5분 & 수급 모니터</title>  
-    <style>  
-        :root {  
-            --bg-primary: #0f172a;  
-            --bg-secondary: #1e293b;  
-            --bg-card: #334155;  
-            --text-main: #f8fafc;  
-            --text-sub: #94a3b8;  
-            --accent-green: #10b981;  
-            --accent-red: #f43f5e;  
-            --accent-gold: #f59e0b;  
-            --accent-blue: #38bdf8;  
-            --border-color: #475569;  
-        }  
-  
-        body.light-mode {  
-            --bg-primary: #f8fafc;  
-            --bg-secondary: #ffffff;  
-            --bg-card: #f1f5f9;  
-            --text-main: #0f172a;  
-            --text-sub: #64748b;  
-            --border-color: #cbd5e1;  
-        }  
-  
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }  
-        body { background-color: var(--bg-primary); color: var(--text-main); padding: 12px; font-size: 13px; padding-bottom: 60px; max-width: 900px; margin: 0 auto; }  
-  
-        header { position: sticky; top: 0; background: var(--bg-primary); z-index: 99; display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }  
-        .logo { font-size: 1.1rem; font-weight: 800; color: var(--accent-blue); display: flex; align-items: center; gap: 6px; }  
-  
-        .btn-group { display: flex; gap: 6px; }  
-        .btn { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-main); font-size: 0.75rem; font-weight: 600; cursor: pointer; }  
-        .btn-kakao { background: #fee500; color: #000; border: none; }  
-        .btn-primary { background: var(--accent-blue); color: #0f172a; font-weight: 700; border: none; }  
-  
-        .section-container { margin-bottom: 20px; }  
-        .section-header { font-size: 0.95rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; border-left: 3.5px solid var(--accent-blue); padding-left: 8px; }  
-  
-        .card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; }  
-        .card-title { font-size: 0.78rem; color: var(--text-sub); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }  
-        .card-val { font-size: 1.05rem; font-weight: 700; }  
-        .up { color: var(--accent-green); }  
-        .down { color: var(--accent-red); }  
-        .gold { color: var(--accent-gold); }  
-  
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }  
-  
-        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }  
-        .badge-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }  
-        .badge-warn { background: rgba(244, 63, 94, 0.2); color: var(--accent-red); }  
-        .badge-gold { background: rgba(245, 158, 11, 0.2); color: var(--accent-gold); }  
-        .badge-cat { background: var(--bg-card); color: var(--text-main); }  
-  
-        .tag-group { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }  
-        .tag { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }  
-  
-        .stock-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); }  
-        .stock-row:last-child { border-bottom: none; }  
-        .stock-info { display: flex; flex-direction: column; gap: 2px; }  
-        .stock-name { font-weight: 700; font-size: 0.85rem; }  
-        .stock-sub { font-size: 0.72rem; color: var(--text-sub); }  
-  
-        /* 테이블 스타일 추가 */  
-        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 0.78rem; }  
-        .matrix-table th, .matrix-table td { border: 1px solid var(--border-color); padding: 7px 8px; text-align: left; }  
-        .matrix-table th { background: var(--bg-card); color: var(--accent-blue); font-weight: 700; }  
-        .matrix-table td { color: var(--text-main); }  
-  
-        .radar-box { background: var(--bg-card); border-radius: 6px; padding: 10px; margin-bottom: 8px; border: 1px dashed var(--accent-blue); }  
-        .radar-title { font-weight: 700; font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 4px; display: flex; justify-content: space-between; }  
-        .radar-desc { font-size: 0.76rem; color: var(--text-sub); line-height: 1.4; }  
-  
-        .open-news-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; }  
-        .news-head { font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--text-main); display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; line-height: 1.3; }  
-        .news-desc { font-size: 0.78rem; color: var(--text-sub); line-height: 1.45; }  
-  
-        textarea { width: 100%; height: 80px; background: var(--bg-primary); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; font-size: 0.8rem; margin-bottom: 8px; resize: none; }  
-        .report-box { background: var(--bg-card); border-left: 3px solid var(--accent-blue); padding: 10px; font-size: 0.8rem; line-height: 1.5; border-radius: 0 6px 6px 0; white-space: pre-line; }  
-        input[type="text"] { width: 100%; padding: 8px; background: var(--bg-primary); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 8px; font-size: 0.8rem; }  
-    </style>  
-</head>  
-<body>  
-  
-    <header>  
-        <div class="logo">⚡ FlowTerminal - 장전 5분 & 수급 레이더</div>  
-        <div class="btn-group">  
-            <button class="btn btn-kakao" onclick="shareKakao()">💬 브리핑 공유</button>  
-            <button class="btn" onclick="toggleTheme()">🌙/☀️</button>  
-        </div>  
-    </header>  
-  
-    <!-- SECTION 1: 실제 증시 지표 팩트체크 -->  
-    <section class="section-container">  
-        <div class="section-header">1. 실제 증시 지표 팩트체크</div>  
-        <div class="grid-3" style="margin-bottom:8px;">  
-            <div class="card">  
-                <div class="card-title">나스닥 종합 (확정)</div>  
-                <div class="card-val up">26,333.04 <br><span style="font-size:0.75rem">+0.96%</span></div>  
-            </div>  
-            <div class="card">  
-                <div class="card-title">필라델피아 반도체 (확정)</div>  
-                <div class="card-val up">11,824.00 <br><span style="font-size:0.75rem">+1.81%</span></div>  
-            </div>  
-            <div class="card">  
-                <div class="card-title">S&P 500 (확정)</div>  
-                <div class="card-val up">7,656.98 <br><span style="font-size:0.75rem">+0.86%</span></div>  
-            </div>  
-        </div>  
-  
-        <div class="grid-3">  
-            <div class="card">  
-                <div class="card-title">다우 존스 (확정)</div>  
-                <div class="card-val up">52,573.29 <br><span style="font-size:0.75rem">+0.98%</span></div>  
-            </div>  
-            <div class="card">  
-                <div class="card-title">VIX 지수</div>  
-                <div class="card-val down">15.88 <br><span style="font-size:0.75rem">-3.12%</span></div>  
-            </div>  
-            <div class="card">  
-                <div class="card-title">금 현물 (장중/종가)</div>  
-                <div class="card-val gold">$4,344 ~ 4,350 <br><span style="font-size:0.75rem" class="up">+0.70%대</span></div>  
-            </div>  
-        </div>  
-    </section>  
-  
-    <!-- SECTION 2: 미·한 테마 연동성 및 리스크 구분 (신규 테이블 반영) -->  
-    <section class="section-container">  
-        <div class="section-header">2. 미·한 테마 연동성 및 리스크 구분</div>  
-        <div class="card">  
-            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--accent-blue);">  
-                📊 미 증시 이슈 테마 ↔ 국장 연동 자금 집중 매트릭스  
-            </div>  
-            <div style="overflow-x: auto;">  
-                <table class="matrix-table">  
-                    <thead>  
-                        <tr>  
-                            <th>미국 이슈 테마</th>  
-                            <th>미국 주도 종목</th>  
-                            <th>국장 연동 수혜 종목</th>  
-                            <th>자금 유입 성향</th>  
-                        </tr>  
-                    </thead>  
-                    <tbody>  
-                        <tr>  
-                            <td><b>AI 반도체 / HBM</b></td>  
-                            <td>NVIDIA, Micron</td>  
-                            <td>SK하이닉스, 한미반도체</td>  
-                            <td><span class="badge badge-high">기관/외인 동반 순매수</span></td>  
-                        </tr>  
-                        <tr>  
-                            <td><b>전력망 / 변압기</b></td>  
-                            <td>GE Vernova, Eaton</td>  
-                            <td>HD현대일렉트릭, 효성중공업</td>  
-                            <td><span class="badge badge-high">외국인 강력 유입</span></td>  
-                        </tr>  
-                        <tr>  
-                            <td><b>2차전지 / 리튬</b></td>  
-                            <td>Tesla, Albemarle</td>  
-                            <td>LG에너지솔루션, 포스코홀딩스</td>  
-                            <td><span class="badge badge-warn">기관 순매도 / 기술적 반등</span></td>  
-                        </tr>  
-                        <tr>  
-                            <td><b>방산 / 우주항공</b></td>  
-                            <td>Lockheed Martin</td>  
-                            <td>한화에어로ส페이스, 현대로템</td>  
-                            <td><span class="badge badge-gold">사모펀드 지속 유입</span></td>  
-                        </tr>  
-                    </tbody>  
-                </table>  
-            </div>  
-            <div style="font-size: 0.74rem; color: var(--text-sub); margin-top: 8px; line-height: 1.4;">  
-                ※ 주의: 미국 증시 테마가 상승하더라도 국장 수급 주체의 이탈 여부(예: SK하이닉스 메이저 차익 실현 등)에 따라 종목별 디커플링이 발생할 수 있으므로 자금 유입 성향을 반드시 교차 검증해야 합니다.  
-            </div>  
-        </div>  
-    </section>  
-  
-    <!-- SECTION 3: 장전 5분 마켓 핵심 요약 -->  
-    <section class="section-container">  
-        <div class="section-header">3. 장전 5분 마켓 핵심 요약</div>  
-        <div class="card" style="border-left: 4px solid var(--accent-gold);">  
-            <div style="font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; color: var(--accent-gold);">  
-                📌 개장 전 3가지 핵심 체크 포인트  
-            </div>  
-            <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">  
-                <b>1. 반도체 디커플링:</b> SOX 지수 +1.81% 상승(11,824.00)으로 업황 온기 유효하나, SK하이닉스 기관(-4,956억)·외인(-1조 771억) 대량 순매도 확인. 시초가 갭상승 추격은 주의.<br>  
-                <b>2. 주도 테마 손바뀜:</b> HD현대일렉트릭에 외국인 +727억 매수세 집중. AI 전력 인프라 및 방산 섹터 중심의 중기 사이클 지속.<br>  
-                <b>3. 종목별 노이즈 분리:</b> NuScale -15.67% 급락은 국내 원전주와 직접적 커플링 지양. 한화오션 10.2억 달러 손배 피소 등 악재성 공시 및 개별 수급 확인 필수.  
-            </div>  
-        </div>  
-    </section>  
-  
-    <!-- SECTION 4: 스마트머니 수급 레이더 -->  
-    <section class="section-container">  
-        <div class="section-header">4. 스마트머니 수급 레이더</div>  
-          
-        <div class="radar-box">  
-            <div class="radar-title">  
-                <span>🟢 외국인 집중 매수 (주도주 손바뀜)</span>  
-                <span class="badge badge-high">+727억 유입</span>  
-            </div>  
-            <div class="radar-desc">  
-                <b>HD현대일렉트릭:</b> 기관 물량(-398억)을 외국인이 완벽 소화. AI 전력망 확장 및 중기 공급 부족 지속에 따른 메인 수급 주체 전환.  
-            </div>  
-        </div>  
-  
-        <div class="radar-box" style="border-color: var(--accent-red);">  
-            <div class="radar-title">  
-                <span style="color: var(--accent-red);">🔴 메이저 동반 차익 매도 출회</span>  
-                <span class="badge badge-warn">-1.5조원대 이탈</span>  
-            </div>  
-            <div class="radar-desc">  
-                <b>SK하이닉스:</b> 외국인(-1조 771억)과 기관(-4,956억)의 쌍끌이 매도. SOX 강세와 별개로 단기 시세 상단 매물 부담 가중.  
-            </div>  
-        </div>  
-  
-        <div class="radar-box" style="border-color: var(--accent-gold);">  
-            <div class="radar-title">  
-                <span style="color: var(--accent-gold);">🟡 해외 악재 vs 국내 수급 분리 레이더</span>  
-                <span class="badge badge-gold">개별 수급 감시</span>  
-            </div>  
-            <div class="radar-desc">  
-                <b>두산에너빌리티:</b> 美 NuScale -15.67% 급락 여파 있으나 국내 원전 수급과 일대일 연동 안 됨. 장 시작 직후 기관/외인 실제 동시호가 호가 체결량 확인 필요.  
-            </div>  
-        </div>  
-    </section>  
-  
-    <!-- SECTION 5: 거래소 확정 수급 기반 월요일 전략 TOP 5 -->  
-    <section class="section-container">  
-        <div class="section-header">5. 거래소 확정 수급 기반 월요일 전략 TOP 5</div>  
-        <div class="card">  
-            <div class="stock-row">  
-                <div class="stock-info">  
-                    <div class="stock-name">🥇 1순위: HD현대일렉트릭 (267260)</div>  
-                    <div class="stock-sub"><b>외국인 +727억 순매수</b> (기관 -398억) ➔ AI 전력인프라 손바뀜 및 중기 사이클 최우선</div>  
-                </div>  
-                <span class="badge badge-high">강력 관심</span>  
-            </div>  
-            <div class="stock-row">  
-                <div class="stock-info">  
-                    <div class="stock-name">🥈 2순위: SK하이닉스 (000660)</div>  
-                    <div class="stock-sub"><b>외국인 -1조 771억 / 기관 -4,956억</b> ➔ SOX 강세에도 대량 차익매출 출회로 시초가 추격 금물</div>  
-                </div>  
-                <span class="badge badge-warn">시초가 주의</span>  
-            </div>  
-            <div class="stock-row">  
-                <div class="stock-info">  
-                    <div class="stock-name">🥉 3순위: 한화에어로스페이스 (012450)</div>  
-                    <div class="stock-sub">동유럽/중동/미국 파이프라인 확장 및 방산 중장기 모멘텀 유지</div>  
-                </div>  
-                <span class="badge badge-high">중장기 양호</span>  
-            </div>  
-            <div class="stock-row">  
-                <div class="stock-info">  
-                    <div class="stock-name">4순위: 두산에너빌리티 (028050)</div>  
-                    <div class="stock-sub">NuScale 급락과 국내 원전 산업 구조 분리 ➔ 개별 기관/외인 수급 유입 시만 접근</div>  
-                </div>  
-                <span class="badge badge-gold">수급 확인</span>  
-            </div>  
-            <div class="stock-row">  
-                <div class="stock-info">  
-                    <div class="stock-name">5순위: 고려아연 (010130)</div>  
-                    <div class="stock-sub">금 현물 $4,300대 유지 수혜 가능성 ➔ 단, 국제 금시세 변동성 및 경영권 이슈 병행 관찰</div>  
-                </div>  
-                <span class="badge badge-gold">변동성 관리</span>  
-            </div>  
-        </div>  
-    </section>  
-  
-    <!-- SECTION 6: 장전 핵심 뉴스 10선 및 리스크 검증 -->  
-    <section class="section-container">  
-        <div class="section-header">6. 장전 핵심 뉴스 10선 및 리스크 검증</div>  
-        <div id="news-feed"></div>  
-    </section>  
-  
-    <!-- SECTION 7: 팩트 기반 AI 브리핑 생성기 -->  
-    <section class="section-container">  
-        <div class="section-header">7. 팩트 기반 AI 브리핑 생성기</div>  
-        <div class="card">  
-            <textarea id="ai-prompt" placeholder="키워드 입력 (예: HD현대일렉트릭, SK하이닉스 수급, 한화오션 리스크)..."></textarea>  
-            <button class="btn btn-primary" style="width:100%; padding:10px 0;" onclick="generateReport()">⚡ 실시간 리포트 생성</button>  
-        </div>  
-        <div id="ai-result" class="report-box" style="display:none;"></div>  
-    </section>  
-  
-    <!-- SECTION 8: 관심종목 & 메모 -->  
-    <section class="section-container">  
-        <div class="section-header">8. 관심종목 & 메모</div>  
-        <div class="card">  
-            <input type="text" id="watchlist-input" placeholder="종목명 입력 (예: HD현대일렉트릭)">  
-            <button class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="addWatchlist()">추가하기</button>  
-            <div id="watchlist-items"></div>  
-        </div>  
-        <div class="card">  
-            <textarea id="daily-memo" placeholder="월요일 매매 전략 메모" oninput="saveMemo()"></textarea>  
-        </div>  
-    </section>  
-  
-    <script>  
-        const newsFeedData = [  
-            { cat: "전력인프라", title: "1. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 매물(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },  
-            { cat: "반도체", title: "2. SOX 11,824(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "9/11 외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 월요일 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },  
-            { cat: "반도체경쟁", title: "3. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },  
-            { cat: "방산", title: "4. K-방산, 유럽·중동·미국으로 수출 파이프라인 확장 지속", desc: "미국주 커플링과 별개로 방산 업종 자체의 중장기 모멘텀 강력 유지.", stocks: ["한화에어로스페이스", "LIG넥스원"] },  
-            { cat: "원자력", title: "5. 美 NuScale -15.67% 급락... 국내 원전주와 직접 커플링 지양", desc: "미국 SMR과 국내 원전 산업 구조가 다르므로 무조건 동반 하락 단정 지양. 개별 수급 확인 필요.", stocks: ["두산에너빌리티", "우진엔텍"] },  
-            { cat: "조선", title: "6. 한화오션, 러시아 Arctic LNG 2 관련 10.2억 달러 손배 청구 피소", desc: "조선 업황 자체는 양호하나 종목별 개별 악재 노출에 따른 차별화 필수.", stocks: ["한화오션", "HD한국조선해양"] },  
-            { cat: "원자재/금", title: "7. 금 현물 $4,344~$4,350선 고점 유지", desc: "고려아연 등 원자재 수혜 가능성 존재하나 금 가격 자체의 변동성 고려 필수.", stocks: ["고려아연", "엘컴텍"] },  
-            { cat: "바이오", title: "8. 글로벌 비만치료제 CDMO 모멘텀 유지", desc: "위탁생산 및 기술이전 중심 수급 차별화 진행.", stocks: ["삼성바이오로직스", "알테오젠"] },  
-            { cat: "2차전지", title: "9. 리튬 가격 단기 하향 안정세... 실적 반등 시점 타진", desc: "재고 평가손실 축소 여부 지속 관찰 필요.", stocks: ["POSCO홀딩스", "에코프로비엠"] },  
-            { cat: "자동차", title: "10. 북미 하이브리드 차종 점유율 지속 확대", desc: "실적 안정성 기반 자동차 완성차 및 전장 부품주 관찰.", stocks: ["현대차", "기아"] }  
-        ];  
-  
-        function renderNewsFeed() {  
-            const container = document.getElementById('news-feed');  
-            if(!container) return;  
-            container.innerHTML = '';  
-            newsFeedData.forEach(item => {  
-                const div = document.createElement('div');  
-                div.className = 'open-news-card';  
-                const tagsHtml = item.stocks.map(s => `<span class="tag">${s}</span>`).join('');  
-                div.innerHTML = `  
-                    <div class="news-head">  
-                        <span>${item.title}</span>  
-                        <span class="badge badge-cat">${item.cat}</span>  
-                    </div>  
-                    <div class="news-desc">${item.desc}</div>  
-                    <div class="tag-group">${tagsHtml}</div>  
-                `;  
-                container.appendChild(div);  
-            });  
-        }  
-  
-        function toggleTheme() {  
-            document.body.classList.toggle('light-mode');  
-        }  
-  
-        function generateReport() {  
-            const prompt = document.getElementById('ai-prompt').value || "장전 5분 체크 리스트";  
-            const resultBox = document.getElementById('ai-result');  
-            resultBox.style.display = 'block';  
-            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n2. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 1.5조원 이상 동반 매도 출회.\n3. <b>개별 리스크 관리:</b> 한화오션(10.2억$ 손배 피소), 두산에너빌리티(NuScale 급락 여파 장초반 동시호가 체결 수급 확인 필수).`;  
-        }  
-  
-        function shareKakao() {  
-            const shareText = `[AlphaFlow 장전 5분 마켓 브리핑]\n\n⏱️ 핵심 요약:\n1. HD현대일렉트릭: 외인 +727억 수급 손바뀜 1순위\n2. SK하이닉스: SOX 상승에도 외인/기관 동반 대량 매도로 시초가 추격 주의\n3. 한화오션: 10.2억$ 손배 청구 이슈로 조선주 개별 차별화 대응`;  
-            navigator.clipboard.writeText(shareText);  
-            alert("장전 브리핑 및 수급 레이더 요약문이 복사되었습니다!");  
-        }  
-  
-        function saveMemo() {  
-            localStorage.setItem('alphaflow_memo', document.getElementById('daily-memo').value);  
-        }  
-  
-        function getWatchlist() {  
-            return JSON.parse(localStorage.getItem('alphaflow_watchlist') || '[]');  
-        }  
-  
-        function addWatchlist() {  
-            const input = document.getElementById('watchlist-input');  
-            if(!input.value.trim()) return;  
-            const list = getWatchlist();  
-            list.push(input.value.trim());  
-            localStorage.setItem('alphaflow_watchlist', JSON.stringify(list));  
-            input.value = '';  
-            renderWatchlist();  
-        }  
-  
-        function removeWatchlist(index) {  
-            const list = getWatchlist();  
-            list.splice(index, 1);  
-            localStorage.setItem('alphaflow_watchlist', JSON.stringify(list));  
-            renderWatchlist();  
-        }  
-  
-        function renderWatchlist() {  
-            const container = document.getElementById('watchlist-items');  
-            if(!container) return;  
-            const list = getWatchlist();  
-            container.innerHTML = '';  
-            list.forEach((item, index) => {  
-                const div = document.createElement('div');  
-                div.className = 'stock-row';  
-                div.innerHTML = `<span><b>${item}</b></span><button class="btn" style="color:var(--accent-red)" onclick="removeWatchlist(${index})">삭제</button>`;  
-                container.appendChild(div);  
-            });  
-        }  
-  
-        window.onload = function() {  
-            renderNewsFeed();  
-            renderWatchlist();  
-            const savedMemo = localStorage.getItem('alphaflow_memo');  
-            if(savedMemo) document.getElementById('daily-memo').value = savedMemo;  
-        };  
-    </script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaFlow Terminal Pro - 장전 5분 & 수급 레이더</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-green: #10b981;
+            --accent-red: #f43f5e;
+            --accent-gold: #f59e0b;
+            --accent-blue: #38bdf8;
+            --border-color: #475569;
+        }
+
+        body.light-mode {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #f1f5f9;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border-color: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-primary); color: var(--text-main); padding: 12px; font-size: 13px; padding-bottom: 60px; max-width: 900px; margin: 0 auto; }
+
+        header { position: sticky; top: 0; background: var(--bg-primary); z-index: 99; display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+        .logo { font-size: 1.1rem; font-weight: 800; color: var(--accent-blue); display: flex; align-items: center; gap: 6px; }
+
+        .btn-group { display: flex; gap: 6px; }
+        .btn { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-main); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .btn-kakao { background: #fee500; color: #000; border: none; }
+        .btn-primary { background: var(--accent-blue); color: #0f172a; font-weight: 700; border: none; }
+
+        .section-container { margin-bottom: 20px; }
+        .section-header { font-size: 0.95rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; border-left: 3.5px solid var(--accent-blue); padding-left: 8px; }
+
+        .card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+        .card-title { font-size: 0.78rem; color: var(--text-sub); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .card-val { font-size: 1.05rem; font-weight: 700; }
+        .up { color: var(--accent-green); }
+        .down { color: var(--accent-red); }
+        .gold { color: var(--accent-gold); }
+
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+        .badge-high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .badge-warn { background: rgba(244, 63, 94, 0.2); color: var(--accent-red); }
+        .badge-gold { background: rgba(245, 158, 11, 0.2); color: var(--accent-gold); }
+        .badge-cat { background: var(--bg-card); color: var(--text-main); }
+
+        .tag-group { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+        .tag { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }
+
+        .stock-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+        .stock-row:last-child { border-bottom: none; }
+        .stock-info { display: flex; flex-direction: column; gap: 2px; }
+        .stock-name { font-weight: 700; font-size: 0.85rem; }
+        .stock-sub { font-size: 0.72rem; color: var(--text-sub); }
+
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 0.78rem; }
+        .matrix-table th, .matrix-table td { border: 1px solid var(--border-color); padding: 7px 8px; text-align: left; }
+        .matrix-table th { background: var(--bg-card); color: var(--accent-blue); font-weight: 700; }
+        .matrix-table td { color: var(--text-main); }
+
+        .radar-box { background: var(--bg-card); border-radius: 6px; padding: 10px; margin-bottom: 8px; border: 1px dashed var(--accent-blue); }
+        .radar-title { font-weight: 700; font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .radar-desc { font-size: 0.76rem; color: var(--text-sub); line-height: 1.4; }
+
+        .open-news-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+        .news-head { font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--text-main); display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; line-height: 1.3; }
+        .news-desc { font-size: 0.78rem; color: var(--text-sub); line-height: 1.45; }
+
+        textarea { width: 100%; height: 80px; background: var(--bg-primary); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; font-size: 0.8rem; margin-bottom: 8px; resize: none; }
+        .report-box { background: var(--bg-card); border-left: 3px solid var(--accent-blue); padding: 10px; font-size: 0.8rem; line-height: 1.5; border-radius: 0 6px 6px 0; white-space: pre-line; }
+        input[type="text"] { width: 100%; padding: 8px; background: var(--bg-primary); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 8px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">⚡ AlphaFlow PRO - 장전 5분 & 수급 레이더</div>
+        <div class="btn-group">
+            <button class="btn btn-kakao" onclick="shareKakao()">💬 브리핑 공유</button>
+            <button class="btn" onclick="toggleTheme()">🌙/☀️</button>
+        </div>
+    </header>
+
+    <!-- SECTION 1: 실제 증시 지표 팩트체크 (유가, 환율 추가) -->
+    <section class="section-container">
+        <div class="section-header">1. 실제 증시 지표 팩트체크</div>
+        <div class="grid-3" style="margin-bottom:8px;">
+            <div class="card">
+                <div class="card-title">나스닥 종합 (확정)</div>
+                <div class="card-val up">26,333.04 <br><span style="font-size:0.75rem">+0.96%</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">필라델피아 반도체 (확정)</div>
+                <div class="card-val up">11,824.00 <br><span style="font-size:0.75rem">+1.81%</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">S&P 500 (확정)</div>
+                <div class="card-val up">7,656.98 <br><span style="font-size:0.75rem">+0.86%</span></div>
+            </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:8px;">
+            <div class="card">
+                <div class="card-title">다우 존스 (확정)</div>
+                <div class="card-val up">52,573.29 <br><span style="font-size:0.75rem">+0.98%</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">VIX 지수</div>
+                <div class="card-val down">15.88 <br><span style="font-size:0.75rem">-3.12%</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">금 현물 (장중/종가)</div>
+                <div class="card-val gold">$4,344 ~ 4,350 <br><span style="font-size:0.75rem" class="up">+0.70%대</span></div>
+            </div>
+        </div>
+
+        <!-- WTI 유가 및 환율 추가 카드 라인 -->
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-title">WTI 원유 (배럴당)</div>
+                <div class="card-val gold" style="color:var(--accent-red);">$103.00 <br><span style="font-size:0.75rem" class="down">중동 긴장 급등</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">원/달러 환율 (종가)</div>
+                <div class="card-val up">1,341.59원 <br><span style="font-size:0.75rem" class="down">전일대비 안정세</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">달러 인덱스</div>
+                <div class="card-val" style="color:var(--text-main);">약보세 <br><span style="font-size:0.75rem; color:var(--text-sub);">주요국 통화 혼조</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: 미·한 테마 연동성 및 리스크 구분 -->
+    <section class="section-container">
+        <div class="section-header">2. 미·한 테마 연동성 및 리스크 구분</div>
+        <div class="card">
+            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--accent-blue);">
+                📊 미 증시 이슈 테마 ↔ 국장 연동 자금 집중 매트릭스
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>미국 이슈 테마</th>
+                            <th>미국 주도 종목</th>
+                            <th>국장 연동 수혜 종목</th>
+                            <th>자금 유입 성향</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>AI 반도체 / HBM</b></td>
+                            <td>NVIDIA, Micron</td>
+                            <td>SK하이닉스, 한미반도체</td>
+                            <td><span class="badge badge-high">기관/외인 동반 순매수</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>전력망 / 변압기</b></td>
+                            <td>GE Vernova, Eaton</td>
+                            <td>HD현대일렉트릭, 효성중공업</td>
+                            <td><span class="badge badge-high">외국인 강력 유입</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>2차전지 / 리튬</b></td>
+                            <td>Tesla, Albemarle</td>
+                            <td>LG에너지솔루션, 포스코홀딩스</td>
+                            <td><span class="badge badge-warn">기관 순매도 / 기술적 반등</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>방산 / 우주항공</b></td>
+                            <td>Lockheed Martin</td>
+                            <td>한화에어로스페이스, 현대로템</td>
+                            <td><span class="badge badge-gold">사모펀드 지속 유입</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-sub); margin-top: 8px; line-height: 1.4;">
+                ※ 주의: 미국 증시 테마가 상승하더라도 국장 수급 주체의 이탈 여부(예: SK하이닉스 메이저 차익 실현 등)에 따라 종목별 디커플링이 발생할 수 있으므로 자금 유입 성향을 반드시 교차 검증해야 합니다.
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: 장전 5분 마켓 핵심 요약 -->
+    <section class="section-container">
+        <div class="section-header">3. 장전 5분 마켓 핵심 요약</div>
+        <div class="card" style="border-left: 4px solid var(--accent-gold);">
+            <div style="font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; color: var(--accent-gold);">
+                📌 개장 전 3가지 핵심 체크 포인트
+            </div>
+            <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">
+                <b>1. 반도체 디커플링:</b> SOX 지수 +1.81% 상승(11,824.00)으로 업황 온기 유효하나, SK하이닉스 기관(-4,956억)·외인(-1조 771억) 대량 순매도 확인. 시초가 갭상승 추격은 주의.<br>
+                <b>2. 주도 테마 손바뀜:</b> HD현대일렉트릭에 외국인 +727억 매수세 집중. AI 전력 인프라 및 방산 섹터 중심의 중기 사이클 지속.<br>
+                <b>3. 종목별 노이즈 분리:</b> NuScale -15.67% 급락은 국내 원전주와 직접적 커플링 지양. 한화오션 10.2억 달러 손배 피소 등 악재성 공시 및 개별 수급 확인 필수.
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: 스마트머니 수급 레이더 -->
+    <section class="section-container">
+        <div class="section-header">4. 스마트머니 수급 레이더</div>
+        
+        <div class="radar-box">
+            <div class="radar-title">
+                <span>🟢 외국인 집중 매수 (주도주 손바뀜)</span>
+                <span class="badge badge-high">+727억 유입</span>
+            </div>
+            <div class="radar-desc">
+                <b>HD현대일렉트릭:</b> 기관 물량(-398억)을 외국인이 완벽 소화. AI 전력망 확장 및 중기 공급 부족 지속에 따른 메인 수급 주체 전환.
+            </div>
+        </div>
+
+        <div class="radar-box" style="border-color: var(--accent-red);">
+            <div class="radar-title">
+                <span style="color: var(--accent-red);">🔴 메이저 동반 차익 매도 출회</span>
+                <span class="badge badge-warn">-1.5조원대 이탈</span>
+            </div>
+            <div class="radar-desc">
+                <b>SK하이닉스:</b> 외국인(-1조 771억)과 기관(-4,956억)의 쌍끌이 매도. SOX 강세와 별개로 단기 시세 상단 매물 부담 가중.
+            </div>
+        </div>
+
+        <div class="radar-box" style="border-color: var(--accent-gold);">
+            <div class="radar-title">
+                <span style="color: var(--accent-gold);">🟡 해외 악재 vs 국내 수급 분리 레이더</span>
+                <span class="badge badge-gold">개별 수급 감시</span>
+            </div>
+            <div class="radar-desc">
+                <b>두산에너빌리티:</b> 美 NuScale -15.67% 급락 여파 있으나 국내 원전 수급과 일대일 연동 안 됨. 장 시작 직후 기관/외인 실제 동시호가 호가 체결량 확인 필요.
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: 거래소 확정 수급 기반 월요일 전략 TOP 5 -->
+    <section class="section-container">
+        <div class="section-header">5. 거래소 확정 수급 기반 월요일 전략 TOP 5</div>
+        <div class="card">
+            <div class="stock-row">
+                <div class="stock-info">
+                    <div class="stock-name">🥇 1순위: HD현대일렉트릭 (267260)</div>
+                    <div class="stock-sub"><b>외국인 +727억 순매수</b> (기관 -398억) ➔ AI 전력인프라 손바뀜 및 중기 사이클 최우선</div>
+                </div>
+                <span class="badge badge-high">강력 관심</span>
+            </div>
+            <div class="stock-row">
+                <div class="stock-info">
+                    <div class="stock-name">🥈 2순위: SK하이닉스 (000660)</div>
+                    <div class="stock-sub"><b>외국인 -1조 771억 / 기관 -4,956억</b> ➔ SOX 강세에도 대량 차익매출 출회로 시초가 추격 금물</div>
+                </div>
+                <span class="badge badge-warn">시초가 주의</span>
+            </div>
+            <div class="stock-row">
+                <div class="stock-info">
+                    <div class="stock-name">🥉 3순위: 한화에어로스페이스 (012450)</div>
+                    <div class="stock-sub">동유럽/중동/미국 파이프라인 확장 및 방산 중장기 모멘텀 유지</div>
+                </div>
+                <span class="badge badge-high">중장기 양호</span>
+            </div>
+            <div class="stock-row">
+                <div class="stock-info">
+                    <div class="stock-name">4순위: 두산에너빌리티 (028050)</div>
+                    <div class="stock-sub">NuScale 급락과 국내 원전 산업 구조 분리 ➔ 개별 기관/외인 수급 유입 시만 접근</div>
+                </div>
+                <span class="badge badge-gold">수급 확인</span>
+            </div>
+            <div class="stock-row">
+                <div class="stock-info">
+                    <div class="stock-name">5순위: 고려아연 (010130)</div>
+                    <div class="stock-sub">금 현물 $4,300대 유지 수혜 가능성 ➔ 단, 국제 금시세 변동성 및 경영권 이슈 병행 관찰</div>
+                </div>
+                <span class="badge badge-gold">변동성 관리</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: 장전 핵심 뉴스 10선 및 리스크 검증 -->
+    <section class="section-container">
+        <div class="section-header">6. 장전 핵심 뉴스 10선 및 리스크 검증</div>
+        <div id="news-feed"></div>
+    </section>
+
+    <!-- SECTION 7: 팩트 기반 AI 브리핑 생성기 -->
+    <section class="section-container">
+        <div class="section-header">7. 팩트 기반 AI 브리핑 생성기</div>
+        <div class="card">
+            <textarea id="ai-prompt" placeholder="키워드 입력 (예: HD현대일렉트릭, SK하이닉스 수급, 한화오션 리스크)..."></textarea>
+            <button class="btn btn-primary" style="width:100%; padding:10px 0;" onclick="generateReport()">⚡ 실시간 리포트 생성</button>
+        </div>
+        <div id="ai-result" class="report-box" style="display:none;"></div>
+    </section>
+
+    <!-- SECTION 8: 관심종목 & 메모 -->
+    <section class="section-container">
+        <div class="section-header">8. 관심종목 & 메모</div>
+        <div class="card">
+            <input type="text" id="watchlist-input" placeholder="종목명 입력 (예: HD현대일렉트릭)">
+            <button class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="addWatchlist()">추가하기</button>
+            <div id="watchlist-items"></div>
+        </div>
+        <div class="card">
+            <textarea id="daily-memo" placeholder="월요일 매매 전략 메모" oninput="saveMemo()"></textarea>
+        </div>
+    </section>
+
+    <script>
+        const newsFeedData = [
+            { cat: "전력인프라", title: "1. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 매물(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
+            { cat: "반도체", title: "2. SOX 11,824(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "9/11 외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 월요일 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },
+            { cat: "반도체경쟁", title: "3. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },
+            { cat: "방산", title: "4. K-방산, 유럽·중동·미국으로 수출 파이프라인 확장 지속", desc: "미국주 커플링과 별개로 방산 업종 자체의 중장기 모멘텀 강력 유지.", stocks: ["한화에어로스페이스", "LIG넥스원"] },
+            { cat: "원자력", title: "5. 美 NuScale -15.67% 급락... 국내 원전주와 직접 커플링 지양", desc: "미국 SMR과 국내 원전 산업 구조가 다르므로 무조건 동반 하락 단정 지양. 개별 수급 확인 필요.", stocks: ["두산에너빌리티", "우진엔텍"] },
+            { cat: "조선", title: "6. 한화오션, 러시아 Arctic LNG 2 관련 10.2억 달러 손배 청구 피소", desc: "조선 업황 자체는 양호하나 종목별 개별 악재 노출에 따른 차별화 필수.", stocks: ["한화오션", "HD한국조선해양"] },
+            { cat: "원자재/금", title: "7. 금 현물 $4,344~$4,350선 고점 유지", desc: "고려아연 등 원자재 수혜 가능성 존재하나 금 가격 자체의 변동성 고려 필수.", stocks: ["고려아연", "엘컴텍"] },
+            { cat: "바이오", title: "8. 글로벌 비만치료제 CDMO 모멘텀 유지", desc: "위탁생산 및 기술이전 중심 수급 차별화 진행.", stocks: ["삼성바이오로직스", "알테오젠"] },
+            { cat: "2차전지", title: "9. 리튬 가격 단기 하향 안정세... 실적 반등 시점 타진", desc: "재고 평가손실 축소 여부 지속 관찰 필요.", stocks: ["POSCO홀딩스", "에코프로비엠"] },
+            { cat: "자동차", title: "10. 북미 하이브리드 차종 점유율 지속 확대", desc: "실적 안정성 기반 자동차 완성차 및 전장 부품주 관찰.", stocks: ["현대차", "기아"] }
+        ];
+
+        function renderNewsFeed() {
+            const container = document.getElementById('news-feed');
+            if(!container) return;
+            container.innerHTML = '';
+            newsFeedData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'open-news-card';
+                const tagsHtml = item.stocks.map(s => `<span class="tag">${s}</span>`).join('');
+                div.innerHTML = `
+                    <div class="news-head">
+                        <span>${item.title}</span>
+                        <span class="badge badge-cat">${item.cat}</span>
+                    </div>
+                    <div class="news-desc">${item.desc}</div>
+                    <div class="tag-group">${tagsHtml}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        function generateReport() {
+            const prompt = document.getElementById('ai-prompt').value || "장전 5분 체크 리스트";
+            const resultBox = document.getElementById('ai-result');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n2. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 1.5조원 이상 동반 매도 출회.\n3. <b>개별 리스크 관리:</b> 한화오션(10.2억$ 손배 피소), 두산에너빌리티(NuScale 급락 여파 장초반 동시호가 체결 수급 확인 필수).`;
+        }
+
+        function shareKakao() {
+            const shareText = `[AlphaFlow 장전 5분 마켓 브리핑]\n\n⏱️ 핵심 요약:\n1. HD현대일렉트릭: 외인 +727억 수급 손바뀜 1순위\n2. SK하이닉스: SOX 상승에도 외인/기관 동반 대량 매도로 시초가 추격 주의\n3. 한화오션: 10.2억$ 손배 청구 이슈로 조선주 개별 차별화 대응`;
+            navigator.clipboard.writeText(shareText);
+            alert("장전 브리핑 및 수급 레이더 요약문이 복사되었습니다!");
+        }
+
+        function saveMemo() {
+            localStorage.setItem('alphaflow_memo', document.getElementById('daily-memo').value);
+        }
+
+        function getWatchlist() {
+            return JSON.parse(localStorage.getItem('alphaflow_watchlist') || '[]');
+        }
+
+        function addWatchlist() {
+            const input = document.getElementById('watchlist-input');
+            if(!input.value.trim()) return;
+            const list = getWatchlist();
+            list.push(input.value.trim());
+            localStorage.setItem('alphaflow_watchlist', JSON.stringify(list));
+            input.value = '';
+            renderWatchlist();
+        }
+
+        function removeWatchlist(index) {
+            const list = getWatchlist();
+            list.splice(index, 1);
+            localStorage.setItem('alphaflow_watchlist', JSON.stringify(list));
+            renderWatchlist();
+        }
+
+        function renderWatchlist() {
+            const container = document.getElementById('watchlist-items');
+            if(!container) return;
+            const list = getWatchlist();
+            container.innerHTML = '';
+            list.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'stock-row';
+                div.innerHTML = `<span><b>${item}</b></span><button class="btn" style="color:var(--accent-red)" onclick="removeWatchlist(${index})">삭제</button>`;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = function() {
+            renderNewsFeed();
+            renderWatchlist();
+            const savedMemo = localStorage.getItem('alphaflow_memo');
+            if(savedMemo) document.getElementById('daily-memo').value = savedMemo;
+        };
+    </script>
+</body>
+</html>
