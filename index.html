@@ -93,7 +93,7 @@
         </div>
     </header>
 
-    <!-- SECTION 1: 실제 증시 지표 팩트체크 (실시간 최신 시세 반영) -->
+    <!-- SECTION 1: 실제 증시 지표 팩트체크 (S&P 500 및 WTI 실시간 반영) -->
     <section class="section-container">
         <div class="section-header">1. 실제 증시 지표 팩트체크</div>
         <div class="grid-3" style="margin-bottom:8px;">
@@ -106,7 +106,7 @@
                 <div class="card-val up">11,823.99 <br><span style="font-size:0.75rem">+1.81%</span></div>
             </div>
             <div class="card">
-                <div class="card-title">S&P 500 (확정)</div>
+                <div class="card-title">S&P 500 (확정/실시간)</div>
                 <div class="card-val up">7,656.98 <br><span style="font-size:0.75rem">+0.86%</span></div>
             </div>
         </div>
@@ -117,8 +117,8 @@
                 <div class="card-val up">52,573.29 <br><span style="font-size:0.75rem">+0.98%</span></div>
             </div>
             <div class="card">
-                <div class="card-title">VIX 지수</div>
-                <div class="card-val down">15.84 <br><span style="font-size:0.75rem">-11.21%</span></div>
+                <div class="card-title">S&P 500 지수 (세부 지표)</div>
+                <div class="card-val up">7,656.98 pt <br><span style="font-size:0.75rem" class="up">대형주 벤치마크 안정세</span></div>
             </div>
             <div class="card">
                 <div class="card-title">금 현물 (실시간)</div>
@@ -128,8 +128,8 @@
 
         <div class="grid-3">
             <div class="card">
-                <div class="card-title">WTI 원유 (마감)</div>
-                <div class="card-val gold" style="color:var(--accent-red);">$100.05 <br><span style="font-size:0.75rem" class="down">안정세 유지</span></div>
+                <div class="card-title">WTI 원유 (실시간)</div>
+                <div class="card-val gold" style="color:var(--accent-red);">$100.12 <br><span style="font-size:0.75rem" class="up">실시간 소폭 등락</span></div>
             </div>
             <div class="card">
                 <div class="card-title">원/달러 환율 (실시간)</div>
@@ -201,7 +201,7 @@
                 📌 개장 전 3가지 핵심 체크 포인트
             </div>
             <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">
-                <b>1. 지표 반등 연동:</b> 나스닥(+0.96%) 및 필라델피아 반도체(+1.81%) 강세 마감 영향으로 국내 선물(1,094.55 pt, +0.57%) 상승세.<br>
+                <b>1. 지표 반등 연동:</b> 나스닥(+0.96%) 및 S&P 500(+0.86%) 대형주 지수 강세 마감 영향으로 국내 선물(1,094.55 pt, +0.57%) 상승세.<br>
                 <b>2. 반도체 디커플링 경계:</b> SOX 급등에도 불구하고 국내 대형주 수급 이탈 여부 및 시초가 갭상승 추격 주의.<br>
                 <b>3. 주도 테마 손바뀜:</b> HD현대일렉트릭 등 AI 전력망·방산 섹터 중심의 실질 수급 유입 모니터링 필수.
             </div>
@@ -316,14 +316,14 @@
 
     <script>
         const newsFeedData = [
-            { cat: "지수/야선", title: "1. 코스피 200 선물 1,094.55 pt(+0.57%) 소폭 상승세 기록", desc: "미 증시 강세 훈풍을 이어받아 국내 증시 방향성 우호적 형성.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
+            { cat: "지수/야선", title: "1. 코스피 200 선물 1,094.55 pt(+0.57%) 소폭 상승세 기록", desc: "미 증시 강세(나스닥 +0.96%, S&P 500 +0.86%) 훈풍을 이어받아 국내 증시 방향성 우호적 형성.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
             { cat: "전력인프라", title: "2. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 물량(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
             { cat: "반도체", title: "3. SOX 11,823.99(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "반도체경쟁", title: "4. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "방산", title: "5. K-방산, 유럽·중동·미국으로 수출 파이프라인 확장 지속", desc: "미국주 커플링과 별개로 방산 업종 자체의 중장기 모멘텀 강력 유지.", stocks: ["한화에어로스페이스", "LIG넥스원"] },
             { cat: "원자력", title: "6. 美 NuScale -15.67% 급락... 국내 원전주와 직접 커플링 지양", desc: "미국 SMR과 국내 원전 산업 구조가 다르므로 무조건 동반 하락 단정 지양. 개별 수급 확인 필요.", stocks: ["두산에너빌리티", "우진엔텍"] },
             { cat: "조선", title: "7. 한화오션, 러시아 Arctic LNG 2 관련 10.2억 달러 손배 청구 피소", desc: "조선 업황 자체는 양호하나 종목별 개별 악재 노출에 따른 차별화 필수.", stocks: ["한화오션", "HD한국조선해양"] },
-            { cat: "원자재/금", title: "8. 금 현물 $4,347.42 온스당 고점 유지 및 WTI $100.05 안정세", desc: "원자재 시장 혼조세 속 개별 수혜주 중심의 선별적 대응 유효.", stocks: ["고려아연", "S-Oil"] },
+            { cat: "원자재/금", title: "8. 금 현물 $4,347.42 온스당 고점 유지 및 WTI 원유 $100.12 실시간 등락", desc: "원자재 시장 변동성 속 개별 수혜주 중심의 선별적 대응 유효.", stocks: ["고려아연", "S-Oil"] },
             { cat: "2차전지", title: "9. 리튬 가격 단기 하향 안정세... 실적 반등 시점 타진", desc: "재고 평가손실 축소 여부 지속 관찰 필요.", stocks: ["POSCO홀딩스", "에코프로비엠"] },
             { cat: "자동차", title: "10. 북미 하이브리드 차종 점유율 지속 확대", desc: "실적 안정성 기반 자동차 완성차 및 전장 부품주 관찰.", stocks: ["현대차", "기아"] }
         ];
@@ -356,7 +356,7 @@
             const prompt = document.getElementById('ai-prompt').value || "장전 5분 체크 리스트";
             const resultBox = document.getElementById('ai-result');
             resultBox.style.display = 'block';
-            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>글로벌 지표 요약:</b> 나스닥(+0.96%), SOX(+1.81%) 강세 마감 반영.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 동반 매도 출회 주의.`;
+            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>글로벌 지표 요약:</b> 나스닥(+0.96%), S&P 500(+0.86%), SOX(+1.81%) 강세 마감 반영.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 동반 매도 출회 주의.`;
         }
 
         function shareKakao() {
@@ -364,7 +364,7 @@
 `[⚡ AlphaFlow 장전 5분 마켓 & 수급 레이더 브리핑]
 
 📌 1. 장전 5분 마켓 핵심 요약
-- 나스닥 +0.96% / SOX +1.81% / 코스피200선물 1,094.55 pt(+0.57%)
+- 나스닥 +0.96% / S&P 500 +0.86% / WTI 원유 $100.12실시간 / 코스피200선물 1,094.55 pt(+0.57%)
 - 전력망·방산 등 주도 테마 중심의 중기 사이클 지속 속, 반도체 갭상승 추격 주의
 
 📊 2. 미·한 테마 연동성 및 리스크 구분
@@ -377,7 +377,7 @@
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    alert("최신 시세가 반영된 요약 브리핑이 복사되었습니다!");
+                    alert("S&P 500 지수 및 WTI 실시간 시세가 반영된 요약 브리핑이 복사되었습니다!");
                 }).catch(() => {
                     fallbackCopyText(shareText);
                 });
@@ -396,7 +396,7 @@
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    alert("최신 시세가 반영된 요약 브리핑이 복사되었습니다!");
+                    alert("S&P 500 지수 및 WTI 실시간 시세가 반영된 요약 브리핑이 복사되었습니다!");
                 } else {
                     alert("복사에 실패했습니다. 텍스트를 직접 복사해주세요.");
                 }
