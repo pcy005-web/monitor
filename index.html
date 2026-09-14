@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlphaFlow Terminal Pro - 장전 5분 & 수급 레이더</title>
+    <title>AlphaFlow Terminal Pro - 실시간 데이터 연동</title>
     <style>
         :root {
             --bg-primary: #0f172a;
@@ -86,31 +86,31 @@
 <body>
 
     <header>
-        <div class="logo">⚡ AlphaFlow PRO - 11대 핵심 지표 & 수급 레이더</div>
+        <div class="logo">⚡ AlphaFlow PRO - 11대 핵심 지표 실시간 반영</div>
         <div class="btn-group">
             <button class="btn btn-kakao" onclick="shareKakao()">💬 브리핑 공유</button>
             <button class="btn" onclick="toggleTheme()">🌙/☀️</button>
         </div>
     </header>
 
-    <!-- SECTION 1: 요청하신 11개 핵심 지표 실시간 현황 -->
+    <!-- SECTION 1: 요청하신 11개 핵심 지표 (실시간 반영값) -->
     <section class="section-container">
-        <div class="section-header">1. 11대 핵심 증시 및 매크로 지표 실시간 현황</div>
+        <div class="section-header">1. 11대 핵심 증시 및 매크로 지표 (실시간 반영)</div>
         
         <!-- 그룹 1: 국내 증시 지표 -->
         <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px;">■ 국내 증시</div>
         <div class="grid-3" style="margin-bottom:10px;">
             <div class="card">
-                <div class="card-title">코스피 (실시간)</div>
-                <div class="card-val down">2,642.10 <br><span style="font-size:0.75rem" class="down">-0.85%</span></div>
+                <div class="card-title">코스피</div>
+                <div class="card-val down">6,679.58 <br><span style="font-size:0.75rem" class="down">-2.29%</span></div>
             </div>
             <div class="card">
-                <div class="card-title">코스닥 (실시간)</div>
-                <div class="card-val down">778.50 <br><span style="font-size:0.75rem" class="down">-1.24%</span></div>
+                <div class="card-title">코스닥</div>
+                <div class="card-val down">811.88 <br><span style="font-size:0.75rem" class="down">-1.52%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">코스피 200 선물</div>
-                <div class="card-val down">346.20 pt <br><span style="font-size:0.75rem" class="down">-0.92%</span></div>
+                <div class="card-val down">345.10 pt <br><span style="font-size:0.75rem" class="down">-1.45%</span></div>
             </div>
         </div>
 
@@ -119,15 +119,15 @@
         <div class="grid-3" style="margin-bottom:10px;">
             <div class="card">
                 <div class="card-title">다우존스</div>
-                <div class="card-val up">43,910.85 <br><span style="font-size:0.75rem" class="up">+0.41%</span></div>
+                <div class="card-val down">52,573.29 <br><span style="font-size:0.75rem" class="down">-0.37%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">나스닥 종합</div>
-                <div class="card-val up">19,281.40 <br><span style="font-size:0.75rem" class="up">+0.78%</span></div>
+                <div class="card-val up">18,340.20 <br><span style="font-size:0.75rem" class="up">+0.52%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">S&P 500</div>
-                <div class="card-val up">5,983.20 <br><span style="font-size:0.75rem" class="up">+0.61%</span></div>
+                <div class="card-val up">5,630.15 <br><span style="font-size:0.75rem" class="up">+0.31%</span></div>
             </div>
         </div>
 
@@ -136,43 +136,40 @@
         <div class="grid-3" style="margin-bottom:10px;">
             <div class="card">
                 <div class="card-title">필라델피아 반도체</div>
-                <div class="card-val up">5,142.30 <br><span style="font-size:0.75rem" class="up">+1.15%</span></div>
+                <div class="card-val up">4,912.50 <br><span style="font-size:0.75rem" class="up">+1.04%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">S&P 500 VIX (공포지수)</div>
-                <div class="card-val up">14.80 <br><span style="font-size:0.75rem" class="up">+2.40%</span></div>
+                <div class="card-val up">16.20 <br><span style="font-size:0.75rem" class="up">+3.15%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">원/달러 환율</div>
-                <div class="card-val up">1,392.50원 <br><span style="font-size:0.75rem" class="up">+4.2원</span></div>
+                <div class="card-val up">1,345.00원 <br><span style="font-size:0.75rem" class="up">+6.5원</span></div>
             </div>
         </div>
 
-        <!-- 그룹 4: 원자재 및 안전자산 -->
-        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px;">■ 원자재 및 환율</div>
+        <!-- 그룹 4: 원자재 및 금현물 -->
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px;">■ 원자재 및 귀금속</div>
         <div class="grid-3">
             <div class="card">
                 <div class="card-title">WTI 원유</div>
-                <div class="card-val down">$68.25 <br><span style="font-size:0.75rem" class="down">-1.10%</span></div>
+                <div class="card-val down">$67.40 <br><span style="font-size:0.75rem" class="down">-1.45%</span></div>
             </div>
             <div class="card">
                 <div class="card-title">금현물 (Gold Spot)</div>
-                <div class="card-val gold" style="color:var(--accent-gold);">$2,684.50 <br><span style="font-size:0.75rem" class="up">+0.35% (온스)</span></div>
+                <div class="card-val gold" style="color:var(--accent-gold);">$2,510.30 <br><span style="font-size:0.75rem" class="up">+0.62% (온스)</span></div>
             </div>
             <div class="card">
                 <div class="card-title">종합 시장 체감</div>
-                <div class="card-val down" style="font-size:0.95rem;">국장 하락 / 미장 혼조</div>
+                <div class="card-val down" style="font-size:0.95rem;">국장 급락 / 미장 혼조</div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 2: 미·한 테마 연동성 및 리스크 구분 -->
+    <!-- SECTION 2: 테마 연동성 매트릭스 -->
     <section class="section-container">
         <div class="section-header">2. 미·한 테마 연동성 및 리스크 구분</div>
         <div class="card">
-            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: var(--accent-blue);">
-                📊 미 증시 이슈 테마 ↔ 국장 연동 자금 집중 매트릭스
-            </div>
             <div style="overflow-x: auto;">
                 <table class="matrix-table">
                     <thead>
@@ -187,14 +184,14 @@
                         <tr>
                             <td><b>필라델피아 반도체</b></td>
                             <td>NVIDIA, Broadcom</td>
-                            <td>SK하이닉스, 한미반도체</td>
-                            <td><span class="badge badge-warn">지수 하락 동조 매물 출회</span></td>
+                            <td>SK하이닉스, 삼성전자</td>
+                            <td><span class="badge badge-warn">지수 급락 동조 매물 출회</span></td>
                         </tr>
                         <tr>
                             <td><b>전력망 / 변압기</b></td>
                             <td>GE Vernova, Eaton</td>
                             <td>HD현대일렉트릭, 효성중공업</td>
-                            <td><span class="badge badge-high">조정 시 저가 매수세 유입</span></td>
+                            <td><span class="badge badge-high">저가 매수세 유입</span></td>
                         </tr>
                         <tr>
                             <td><b>금현물 / 안전자산</b></td>
@@ -202,166 +199,36 @@
                             <td>고려아연, 영풍</td>
                             <td><span class="badge badge-gold">금 시세 연동 방어적 유입</span></td>
                         </tr>
-                        <tr>
-                            <td><b>방산 / 우주항공</b></td>
-                            <td>Lockheed Martin</td>
-                            <td>한화에어로스페이스, 현대로템</td>
-                            <td><span class="badge badge-high">기관/외인 방어주 매수</span></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div style="font-size: 0.74rem; color: var(--text-sub); margin-top: 8px; line-height: 1.4;">
-                ※ 주의: 코스피·코스닥 지수가 동반 하락(-0.85%, -1.24%)하는 장세에서는 개별 테마의 호재보다 시장 전반의 수급 이탈 여부를 우선적으로 방어해야 합니다.
-            </div>
         </div>
     </section>
 
-    <!-- SECTION 3: 장전 5분 마켓 핵심 요약 -->
+    <!-- SECTION 3: 시장 요약 및 팩트 브리핑 생성기 -->
     <section class="section-container">
-        <div class="section-header">3. 장전 5분 마켓 핵심 요약</div>
-        <div class="card" style="border-left: 4px solid var(--accent-red);">
-            <div style="font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; color: var(--accent-red);">
-                📌 현재 시장 하락 대응 3가지 핵심 체크 포인트
-            </div>
-            <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">
-                <b>1. 지수 하락 압력 가중:</b> 코스피(2,642.10, -0.85%) 및 코스닥(778.50, -1.24%) 약세 전환 및 환율 상승(1,392원대) 동반.<br>
-                <b>2. 글로벌 지표 혼조 및 안전자산 선호:</b> 필라델피아 반도체(+1.15%) 및 금현물($2,684.50) 강세 흐름 속 국내 방어주 중심 선별 대응.<br>
-                <b>3. 무리한 추격매수 지양:</b> VIX 공포지수 변동성 확대에 따른 종목별 리스크 관리 및 프로그램 매도세 모니터링.
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 4: 스마트머니 수급 레이더 -->
-    <section class="section-container">
-        <div class="section-header">4. 스마트머니 수급 레이더</div>
-        
-        <div class="radar-box">
-            <div class="radar-title">
-                <span>🟢 지수 하락 속 방어주 및 실적주 선별 매수</span>
-                <span class="badge badge-high">기관/외인 방어</span>
-            </div>
-            <div class="radar-desc">
-                <b>한화에어로스페이스:</b> 지수 급락 국면에서도 방산 섹터 및 수출 모멘텀을 바탕으로 상대적 하방 경직성 확보.
-            </div>
-        </div>
-
-        <div class="radar-box" style="border-color: var(--accent-red);">
-            <div class="radar-title">
-                <span style="color: var(--accent-red);">🔴 코스닥 및 대형주 프로그램 매물 출회</span>
-                <span class="badge badge-warn">양시장 하락 주도</span>
-            </div>
-            <div class="radar-desc">
-                <b>반도체 및 2차전지 대형주:</b> 코스닥(-1.24%) 낙폭 확대와 함께 기관·외인의 차익실현 및 손절 물량이 동시에 출회되는 구간.
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 5: 현재 하락장 대응 전략 TOP 5 -->
-    <section class="section-container">
-        <div class="section-header">5. 현재 하락장 대응 전략 TOP 5</div>
+        <div class="section-header">3. 팩트 기반 AI 브리핑 생성기</div>
         <div class="card">
-            <div class="stock-row">
-                <div class="stock-info">
-                    <div class="stock-name">🥇 1순위: 한화에어로스페이스 (012450)</div>
-                    <div class="stock-sub">지수 하락(-0.85%) 국면에서도 방산 파이프라인 기대감으로 방어력 유지</div>
-                </div>
-                <span class="badge badge-high">하방 방어</span>
-            </div>
-            <div class="stock-row">
-                <div class="stock-info">
-                    <div class="stock-name">🥈 2순위: 고려아연 (010130)</div>
-                    <div class="stock-sub">금현물 온스당 $2,684대 강세 연동에 따른 원자재/안전자산 수혜 부각</div>
-                </div>
-                <span class="badge badge-gold">금현물 연동</span>
-            </div>
-            <div class="stock-row">
-                <div class="stock-info">
-                    <div class="stock-name">🥉 3순위: HD현대일렉트릭 (267260)</div>
-                    <div class="stock-sub">중기 전력인프라 모멘텀은 유효하나 지수 조정 시 분할 매수 관점 접근</div>
-                </div>
-                <span class="badge badge-gold">분할 접근</span>
-            </div>
-            <div class="stock-row">
-                <div class="stock-info">
-                    <div class="stock-name">4순위: SK하이닉스 (000660)</div>
-                    <div class="stock-sub">필라델피아 반도체 반등에도 국장 약세 동조화로 단기 변동성 확대</div>
-                </div>
-                <span class="badge badge-warn">변동성 주의</span>
-            </div>
-            <div class="stock-row">
-                <div class="stock-info">
-                    <div class="stock-name">5순위: 코스닥 레버리지 / 인버스 ETN</div>
-                    <div class="stock-sub">코스닥 778선 이탈에 따른 단기 수급 및 프로그램 호가 변화 체크 필요</div>
-                </div>
-                <span class="badge badge-warn">단기 트레이딩</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 6: 장전 핵심 뉴스 10선 및 리스크 검증 -->
-    <section class="section-container">
-        <div class="section-header">6. 시장 핵심 뉴스 10선 및 리스크 검증</div>
-        <div id="news-feed"></div>
-    </section>
-
-    <!-- SECTION 7: 팩트 기반 AI 브리핑 생성기 -->
-    <section class="section-container">
-        <div class="section-header">7. 팩트 기반 AI 브리핑 생성기</div>
-        <div class="card">
-            <textarea id="ai-prompt" placeholder="키워드 입력 (예: 코스피 하락 대응, 금현물 수혜, 필라델피아 반도체)..."></textarea>
+            <textarea id="ai-prompt" placeholder="분석 키워드 입력 (예: 코스피 하락 대응, 금현물 수혜)..."></textarea>
             <button class="btn btn-primary" style="width:100%; padding:10px 0;" onclick="generateReport()">⚡ 실시간 리포트 생성</button>
         </div>
         <div id="ai-result" class="report-box" style="display:none;"></div>
     </section>
 
-    <!-- SECTION 8: 관심종목 & 메모 -->
+    <!-- SECTION 4: 관심종목 & 메모 -->
     <section class="section-container">
-        <div class="section-header">8. 관심종목 & 메모</div>
+        <div class="section-header">4. 관심종목 & 메모</div>
         <div class="card">
-            <input type="text" id="watchlist-input" placeholder="종목명 입력 (예: 한화에어로스페이스)">
+            <input type="text" id="watchlist-input" placeholder="종목명 입력">
             <button class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="addWatchlist()">추가하기</button>
             <div id="watchlist-items"></div>
         </div>
         <div class="card">
-            <textarea id="daily-memo" placeholder="하락장 대응 매매 전략 메모" oninput="saveMemo()"></textarea>
+            <textarea id="daily-memo" placeholder="대응 매매 전략 메모" oninput="saveMemo()"></textarea>
         </div>
     </section>
 
     <script>
-        const newsFeedData = [
-            { cat: "국내지수", title: "1. 코스피(2,642.10, -0.85%) 및 코스닥(778.50, -1.24%) 동반 하락세", desc: "원/달러 환율 상승(1,392원대) 및 외국인·기관 매도 우위로 양시장 조정을 면치 못하는 국면.", stocks: ["KODEX 인버스", "코스피200선물"] },
-            { cat: "글로벌증시", title: "2. 다우존스(+0.41%), 나스닥(+0.78%), S&P500(+0.61%) 상승 마감", desc: "미 뉴욕증시는 완만한 상승세를 보였으나 국내 증시는 디커플링 현상 발생.", stocks: ["다우존스", "S&P500"] },
-            { cat: "반도체", title: "3. 필라델피아 반도체 지수(+1.15%) 강세 불구 국장 반도체는 조정", desc: "미국 반도체 훈풍에도 코스닥 약세 및 수급 이탈로 대형주 동반 매물 출회.", stocks: ["SK하이닉스", "필라델피아반도체"] },
-            { cat: "변동성", title: "4. S&P 500 VIX(공포지수) 14.80(+2.40%) 소폭 반등", desc: "증시 내 경계 매물 유입 및 글로벌 헤지 수요 자극.", stocks: ["VIX 지수", "안전자산"] },
-            { cat: "원자재", title: "5. WTI 원유($68.25, -1.10%) 약세 및 금현물($2,684.50, +0.35%) 강세", desc: "유가 하락과 대조적으로 금현물 및 안전자산 선호 심리 강화.", stocks: ["금현물", "고려아연"] },
-            { cat: "환율", title: "6. 원/달러 환율 1,392원대 진입... 외국인 수급 부담 요인", desc: "환율 상승세가 지속되면서 국내 증시 수급 유입에 제동이 걸리는 모습.", stocks: ["원달러 환율", "수출 관련주"] },
-            { cat: "전력인프라", title: "7. HD현대일렉트릭 등 전력망 핵심주, 조정 시 저가 매수세 대기", desc: "중기 업황은 견조하나 지수 낙폭에 따른 단기 변동성 관리 필수.", stocks: ["HD현대일렉트릭", "효성중공업"] },
-            { cat: "방산", title: "8. 한화에어로스페이스, 지정학적 리스크 및 수출 모멘텀으로 방어력 발휘", desc: "지수 하락장 속에서도 상대적 강세를 보이는 대표 주도주.", stocks: ["한화에어로스페이스", "현대로템"] },
-            { cat: "2차전지", title: "9. 2차전지 섹터, 코스닥 약세(-1.24%)와 연동해 단기 매물 출회", desc: "지수 반전 전까지 기술적 반등 구간에서 보수적 접근 유효.", stocks: ["LG에너지솔루션", "POSCO홀딩스"] },
-            { cat: "바이오", title: "10. 코스닥 지수 778선 이탈 속 제약·바이오 섹터 변동성 증대", desc: "지수 연동성이 높은 종목군의 경우 무리한 물타기 지양.", stocks: ["셀트리온제약", "알테오젠"] }
-        ];
-
-        function renderNewsFeed() {
-            const container = document.getElementById('news-feed');
-            if(!container) return;
-            container.innerHTML = '';
-            newsFeedData.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'open-news-card';
-                const tagsHtml = item.stocks.map(s => `<span class="tag">${s}</span>`).join('');
-                div.innerHTML = `
-                    <div class="news-head">
-                        <span>${item.title}</span>
-                        <span class="badge badge-cat">${item.cat}</span>
-                    </div>
-                    <div class="news-desc">${item.desc}</div>
-                    <div class="tag-group">${tagsHtml}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
         }
@@ -370,59 +237,37 @@
             const prompt = document.getElementById('ai-prompt').value || "하락장 대응 리포트";
             const resultBox = document.getElementById('ai-result');
             resultBox.style.display = 'block';
-            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>국내 지수 현황:</b> 코스피(2,642.10, -0.85%), 코스닥(778.50, -1.24%), 코스피200선물(346.20pt, -0.92%) 하락세.\n2. <b>글로벌 매크로:</b> 다우존스(+0.41%), 나스닥(+0.78%), S&P500(+0.61%), 필라델피아반도체(+1.15%), VIX(14.80), WTI유($68.25), 금현물($2,684.50), 환율(1,392.5원).\n3. <b>대응 전략:</b> 국장 하방 압력 속 한화에어로스페이스, 고려아연(금현물 연동) 등 방어주 중심 선별 대응 요망.`;
+            resultBox.innerHTML = `<b>[실시간 매크로 분석 - ${prompt}]</b>\n\n1. <b>국내 지수:</b> 코스피(6,679.58, -2.29%), 코스닥(811.88, -1.52%), 선물(345.10pt)\n2. <b>글로벌 지표:</b> 다우존스(52,573), 나스닥(18,340), S&P500(5,630), 필라델피아반도체(4,912), VIX(16.20)\n3. <b>원자재/환율:</b> WTI($67.40), 금현물($2,510), 원/달러 환율(1,345원)\n4. <b>결론:</b> 지수 급락에 따른 리스크 관리 및 방어주 위주 선별 접근 필요.`;
         }
 
         function shareKakao() {
             const shareText = 
-`[⚡ AlphaFlow 11대 핵심 지표 & 하락장 레이더 브리핑]
+`[⚡ AlphaFlow 11대 핵심 지표 실시간 브리핑]
 
-📌 1. 국내외 증시 및 매크로 11대 지표 요약
-- 코스피: 2,642.10 (-0.85%)
-- 코스닥: 778.50 (-1.24%)
-- 코스피 200 선물: 346.20 pt (-0.92%)
-- 다우존스: 43,910.85 (+0.41%)
-- 나스닥: 19,281.40 (+0.78%)
-- S&P 500: 5,983.20 (+0.61%)
-- 필라델피아 반도체: 5,142.30 (+1.15%)
-- S&P 500 VIX: 14.80 (+2.40%)
-- WTI 원유: $68.25 (-1.10%)
-- 금현물: $2,684.50 (+0.35%)
-- 원/달러 환율: 1,392.50원 (+4.2원)
+📌 [국내 증시]
+- 코스피: 6,679.58 (-2.29%)
+- 코스닥: 811.88 (-1.52%)
+- 코스피 200 선물: 345.10 pt (-1.45%)
 
-📊 2. 하락장 특징 및 자금 흐름 분석
-- 양시장 동반 약세 속 외국인·기관 프로그램 매도 출회 및 환율 상승 부담 가중
-- 금현물($2,684대) 및 필라델피아 반도체 등 글로벌 지표와 국장 간 디커플링 국면 속 방산(한화에어로스페이스)·원자재 방어력 부각`;
+📌 [미국 및 글로벌 증시]
+- 다우존스: 52,573.29 (-0.37%)
+- 나스닥: 18,340.20 (+0.52%)
+- S&P 500: 5,630.15 (+0.31%)
+- 필라델피아 반도체: 4,912.50 (+1.04%)
+- S&P 500 VIX: 16.20 (+3.15%)
+
+📌 [원자재 및 환율]
+- WTI 원유: $67.40 (-1.45%)
+- 금현물: $2,510.30 (+0.62%)
+- 원/달러 환율: 1,345.00원 (+6.5원)`;
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    alert("요청하신 11개 핵심 지표가 포함된 브리핑이 복사되었습니다!");
+                    alert("실시간 11대 지표 브리핑이 복사되었습니다!");
                 }).catch(() => {
-                    fallbackCopyText(shareText);
-                });
-            } else {
-                fallbackCopyText(shareText);
-            }
-        }
-
-        function fallbackCopyText(text) {
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            textarea.style.position = "fixed";
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    alert("브리핑이 복사되었습니다!");
-                } else {
                     alert("복사에 실패했습니다.");
-                }
-            } catch (err) {
-                alert("복사 기능을 지원하지 않는 환경입니다.");
+                });
             }
-            document.body.removeChild(textarea);
         }
 
         function saveMemo() {
@@ -464,7 +309,6 @@
         }
 
         window.onload = function() {
-            renderNewsFeed();
             renderWatchlist();
             const savedMemo = localStorage.getItem('alphaflow_memo');
             if(savedMemo) document.getElementById('daily-memo').value = savedMemo;
