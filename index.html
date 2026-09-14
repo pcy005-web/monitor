@@ -93,7 +93,7 @@
         </div>
     </header>
 
-    <!-- SECTION 1: 실제 증시 지표 팩트체크 (VIX 지수 및 WTI $102.53 반영) -->
+    <!-- SECTION 1: 실제 증시 지표 팩트체크 (S&P 500 VIX 18.78 및 WTI $102.53 반영) -->
     <section class="section-container">
         <div class="section-header">1. 실제 증시 지표 팩트체크</div>
         <div class="grid-3" style="margin-bottom:8px;">
@@ -117,8 +117,8 @@
                 <div class="card-val up">52,573.29 <br><span style="font-size:0.75rem">+0.98%</span></div>
             </div>
             <div class="card">
-                <div class="card-title">VIX 지수 (공포지수)</div>
-                <div class="card-val down">15.84 <br><span style="font-size:0.75rem" class="down">-11.21% (안정세)</span></div>
+                <div class="card-title">S&P 500 VIX (공포지수)</div>
+                <div class="card-val gold" style="color:var(--accent-gold);">18.78 <br><span style="font-size:0.75rem" class="gold">경계감 유지 (18선대)</span></div>
             </div>
             <div class="card">
                 <div class="card-title">금 현물 (실시간)</div>
@@ -201,7 +201,7 @@
                 📌 개장 전 3가지 핵심 체크 포인트
             </div>
             <div class="news-desc" style="font-size:0.8rem; line-height: 1.6;">
-                <b>1. 지표 반등 연동:</b> 나스닥(+0.96%) 강세 및 VIX(15.84) 하향 안정세 영향으로 국내 선물(1,094.55 pt, +0.57%) 상승세.<br>
+                <b>1. 지표 반등 연동:</b> 나스닥(+0.96%) 강세 및 S&P 500 VIX(18.78) 경계감 상존 속 국내 선물(1,094.55 pt, +0.57%) 상승세.<br>
                 <b>2. 반도체 디커플링 경계:</b> SOX 급등에도 불구하고 국내 대형주 수급 이탈 여부 및 시초가 갭상승 추격 주의.<br>
                 <b>3. 원자재 변동성 모니터링:</b> WTI 원유 실시간 $102.53선 강세 유지에 따른 에너지·정유/소재 섹터 영향 체크.
             </div>
@@ -316,7 +316,7 @@
 
     <script>
         const newsFeedData = [
-            { cat: "지수/야선", title: "1. 코스피 200 선물 1,094.55 pt(+0.57%) 소폭 상승세 기록", desc: "미 증시 강세 및 VIX(15.84) 안정세 훈풍을 이어받아 국내 증시 방향성 우호적 형성.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
+            { cat: "지수/야선", title: "1. 코스피 200 선물 1,094.55 pt(+0.57%) 소폭 상승세 기록", desc: "미 증시 강세 및 S&P 500 VIX(18.78) 경계감 속 국내 증시 방향성 우호적 형성.", stocks: ["KODEX 200선물인버스", "KODEX 레버리지"] },
             { cat: "전력인프라", title: "2. HD현대일렉트릭, 외국인 +727억 대량 순매수 유입", desc: "기관 물량(-398억)을 외국인이 모두 소화. AI 데이터센터 및 전력망 교체 중기 사이클 1순위 주도주.", stocks: ["HD현대일렉트릭", "효성중공업"] },
             { cat: "반도체", title: "3. SOX 11,823.99(+1.81%) 강세 vs SK하이닉스 외인/기관 동반 차익 매도", desc: "외인 -1조 771억, 기관 -4,956억 매도 출회. 모멘텀은 살아있으나 시초가 추격매수는 경계.", stocks: ["SK하이닉스", "삼성전자"] },
             { cat: "반도체경쟁", title: "4. 중국 CXMT, 상하이 신규 팹 장비 입찰... D램 생산 확대 추진", desc: "국내 메모리 업체에는 중장기 경쟁 부담 요소로 작동 가능성.", stocks: ["SK하이닉스", "삼성전자"] },
@@ -356,7 +356,7 @@
             const prompt = document.getElementById('ai-prompt').value || "장전 5분 체크 리스트";
             const resultBox = document.getElementById('ai-result');
             resultBox.style.display = 'block';
-            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>글로벌 지표 요약:</b> 나스닥(+0.96%), VIX(15.84, 안정세), WTI 원유($102.53) 반영.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 동반 매도 출회 주의.`;
+            resultBox.innerHTML = `<b>[AI Analyst Report - ${prompt}]</b>\n\n1. <b>글로벌 지표 요약:</b> 나스닥(+0.96%), S&P 500 VIX(18.78), WTI 원유($102.53) 반영.\n2. <b>스마트머니 레이더:</b> HD현대일렉트릭 외국인 +727억 수급 유입 집중.\n3. <b>시초가 경계:</b> SOX 상승에도 불구하고 SK하이닉스는 외국인·기관 동반 매도 출회 주의.`;
         }
 
         function shareKakao() {
@@ -364,7 +364,7 @@
 `[⚡ AlphaFlow 장전 5분 마켓 & 수급 레이더 브리핑]
 
 📌 1. 장전 5분 마켓 핵심 요약
-- 나스닥 +0.96% / VIX 15.84(안정세) / WTI 원유 $102.53 / 코스피200선물 1,094.55 pt(+0.57%)
+- 나스닥 +0.96% / S&P 500 VIX 18.78(경계감 유지) / WTI 원유 $102.53 / 코스피200선물 1,094.55 pt(+0.57%)
 - 전력망·방산 등 주도 테마 중심의 중기 사이클 지속 속, 반도체 갭상승 추격 주의
 
 📊 2. 미·한 테마 연동성 및 리스크 구분
@@ -377,7 +377,7 @@
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    alert("VIX 지수 및 WTI($102.53) 시세가 반영된 요약 브리핑이 복사되었습니다!");
+                    alert("S&P 500 VIX(18.78) 및 WTI($102.53) 시세가 반영된 요약 브리핑이 복사되었습니다!");
                 }).catch(() => {
                     fallbackCopyText(shareText);
                 });
@@ -396,7 +396,7 @@
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    alert("VIX 지수 및 WTI($102.53) 시세가 반영된 요약 브리핑이 복사되었습니다!");
+                    alert("S&P 500 VIX(18.78) 및 WTI($102.53) 시세가 반영된 요약 브리핑이 복사되었습니다!");
                 } else {
                     alert("복사에 실패했습니다. 텍스트를 직접 복사해주세요.");
                 }
